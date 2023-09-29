@@ -1,0 +1,7 @@
+{
+    "webserver": {
+        "host": "localhost:1025",
+        "debug": true,
+        "enabled": true
+    }
+}
