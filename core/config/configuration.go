@@ -33,20 +33,21 @@ func Load(path string) error {
 }
 
 func WatchChanges(path string) {
-Beginning:
-	initialStat, err := os.Stat(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for {
-		time.Sleep(1 * time.Second)
-		stat, err := os.Stat(path)
-		if err != nil {
-			log.Fatal(err)
-		}
-		if stat.Size() != initialStat.Size() || stat.ModTime() != initialStat.ModTime() {
-			Load(path)
-			goto Beginning
-		}
-	}
+    for {
+        initialStat, err := os.Stat(path)
+        if err != nil {
+            log.Fatal(err)
+        }
+        for {
+            time.Sleep(1 * time.Second)
+            stat, err := os.Stat(path)
+            if err != nil {
+                log.Fatal(err)
+            }
+            if stat.Size() != initialStat.Size() || stat.ModTime() != initialStat.ModTime() {
+                Load(path)
+                break
+            }
+        }
+    }
 }
